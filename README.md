@@ -1,17 +1,10 @@
 # Deploy wordpress with docker
 
-- - -
-
-[TOC]
-
-
-- - -
 
 This repository introduces how to deploy wordpress with docker, actually, with docker-compose. With docker, you can deploy easily without build LAMP enviroment, besides, it is also easy to update related components.
 
 ## Installing
 
-- - -
 
 ### Installing docker-ce
 To install docker, you can reference [docker offical site](https://docs.docker.com/install/), which introduces how to install docker-ce in detail, including different kinds of OS.
@@ -57,7 +50,6 @@ From the result of command ==docker ps==, you can find it runs three docker cont
 2. mariadb
 3. nginx
 
-- - -
 
 ## Config WordPress
 Now you can input == xx.xx.xx.xx:8080 == in you browser to config wordpress, and enjoy...
