@@ -1,0 +1,39 @@
+#!/bin/sh
+#set -e
+
+EXEC_PATH=/home/kefins/wpress
+
+case "$1" in
+        start)
+                echo "----start wpress service"
+                docker-compose -f $EXEC_PATH/docker-compose.yml up 
+                ;;
+
+        stop)
+                echo "----stop wpress service"
+                cd $EXEC_PATH
+                docker-compose stop
+                cd -
+                ;;
+
+        restart)
+                echo "----restart wpress service"
+                cd $EXEC_PATH
+                docker-compose restart
+                cd -
+                ;;
+
+        status)
+                echo "----status wpress service"
+                cd $EXEC_PATH
+                docker-compose ps
+                cd -
+                ;;
+
+        *)
+                echo "Usage: service docker {start|stop|restart|status}"
+                exit 1
+                ;;
+esac
+
+exit 0

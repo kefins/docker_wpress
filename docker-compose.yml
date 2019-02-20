@@ -1,0 +1,65 @@
+version: '3'
+services:
+
+    mysql:
+        image: mariadb
+        container_name: db
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./sqldb:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=aqwe123
+            - MYSQL_DATABASE=wordpress
+            - MYSQL_USER=wordpress
+            - MYSQL_PASSWORD=aqwe123
+        networks:
+            - backend
+        restart: always
+
+    wordpress:
+        depends_on:
+            - mysql
+        image: wordpress:5.0.3-php7.2-fpm
+        container_name: wpress
+        ports:
+            - '9000:9000'
+        volumes:
+            - ./www:/var/www/html
+        environment:
+            - WORDPRESS_DB_NAME=wordpress
+            - WORDPRESS_TABLE_PREFIX=wp_
+            - WORDPRESS_DB_HOST=mysql:3306
+            - WORDPRESS_DB_USER=wordpress
+            - WORDPRESS_DB_PASSWORD=aqwe123
+        links:
+            - mysql
+        networks:
+            - backend
+            - frontend
+        restart: always
+
+    nginx:
+        image: nginx:latest
+        container_name: nginxD
+        ports:
+            - '80:80'
+            - "443:443"
+        volumes:
+            - ./nginx:/etc/nginx/conf.d
+            - ./logs/nginx:/var/log/nginx
+            - ./www:/var/www/html
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        links:
+            - wordpress
+        networks:
+            - frontend
+        restart: always
+
+networks:
+    frontend:
+        #name: test_frontend
+        driver: bridge
+    backend:
+        #name: test_backend
+        driver: bridge

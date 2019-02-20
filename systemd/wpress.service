@@ -1,0 +1,13 @@
+After=docker.service
+
+[Unit]
+Description=BGP container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/home/yanzhijie2/wp/wpress start
+ExecStop=/home/yanzhijie2/wp/wpress stop
+
+[Install]
+WantedBy=multi-user.target
